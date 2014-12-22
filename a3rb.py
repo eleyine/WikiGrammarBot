@@ -37,12 +37,8 @@ def cleanword(word):
     return word
 
 def sortwords(words):
-    words = list(set(words)) #removes duplicate words
-    print(len(words))
-    for i in range(len(words)):
-        words[i] = cleanword(words[i])
-    words = list(set(words))
-    print(len(words))
+    words = set(words)
+    words = set([cleanword(w) for w in words])
     return words
 
 def ennafunc(enna, kind):
