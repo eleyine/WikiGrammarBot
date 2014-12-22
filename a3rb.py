@@ -47,11 +47,11 @@ def ennafunc(enna, kind):
         enna[i] = enna[i].strip() 
         ennasplit = enna[i].split()
         ennasplit[1] = 'إ'+ennasplit[1].lstrip('أ')
-
-        output += 'قبل: %s\n'+enna[i]+'\n' + \
-                  'بعد: ' + \
-                  ennasplit[0]+' '+ennasplit[1]+'\n' + \
-                  'عدد الأخطاء التي صححت: '+str(num+1))
+        output += 'قبل: %s\nبعد: %s %s\nعدد الأخطاء التي صححت: %i' % (
+            enna[i],
+            ennasplit[0],
+            ennasplit[1],
+            num+1)
     
     # it is best to minimise file I/O
     with open('Arabic/outputs/'+kind+'.txt', 'w') as f:
