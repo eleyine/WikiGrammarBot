@@ -42,17 +42,21 @@ def sortwords(words):
     return words
 
 def ennafunc(enna, kind):
-    num = 0
-    output = open('Arabic/outputs/'+kind+'.txt', 'w')
-    for i in range(len(enna)):
-        enna[i] = enna[i].replace('\n', ' ') # discard this line
+    output = ''
+    for num, i in enumerate(range(len(enna))):
+        enna[i] = enna[i].strip() 
         ennasplit = enna[i].split()
-        output.write('قبل: '+enna[i]+'\n')
-        output.write('بعد: ')
         ennasplit[1] = 'إ'+ennasplit[1].lstrip('أ')
-        output.write(ennasplit[0]+' '+ennasplit[1]+'\n')
-        num += 1
-    output.write('عدد الأخطاء التي صححت: '+str(num))
+
+        output += 'قبل: %s\n'+enna[i]+'\n' + \
+                  'بعد: ' + \
+                  ennasplit[0]+' '+ennasplit[1]+'\n' + \
+                  'عدد الأخطاء التي صححت: '+str(num+1))
+    
+    # it is best to minimise file I/O
+    with open('Arabic/outputs/'+kind+'.txt', 'w') as f:
+        f.write(output)
+
     print('Number of corrections:', num)
     print('percentage:', num*100/len(enna))
 
