@@ -43,16 +43,16 @@ def sortwords(words):
 
 def ennafunc(enna, kind):
     output = ''
-    for num, i in enumerate(range(len(enna))):
+    for i in range(len(enna)):
         enna[i] = enna[i].strip() 
         ennasplit = enna[i].split()
         ennasplit[1] = 'إ'+ennasplit[1].lstrip('أ')
-        output += 'قبل: %s\nبعد: %s %s\nعدد الأخطاء التي صححت: %i' % (
+        output += 'قبل: %s\nبعد: %s %s\n' % (
             enna[i],
             ennasplit[0],
-            ennasplit[1],
-            num+1)
-    
+            ennasplit[1])
+    output += 'عدد الأخطاء التي صححت: %i' % (i)
+
     # it is best to minimise file I/O
     with open('Arabic/outputs/'+kind+'.txt', 'w') as f:
         f.write(output)
