@@ -3,29 +3,37 @@ __author__ = 'd7eame'
 import re
 
 def createRegex(identifiers):
-    expression = ''
-    for i in range(len(identifiers)):
-        if i < (len(identifiers) - 1):
-            expression += identifiers[i]+'|'
-        else:
-            expression += identifiers[i]
-    return expression
+    return '|'.join(identifiers)
 
 def cleanword(word):
-    word = re.sub('\u0640','',word) #removes tatweel(kashidah)
-    word = re.sub('\u064b','',word) #removes FATHATAN
-    word = re.sub('\u064c','',word) #removes DAMMATAN
-    word = re.sub('\u064d','',word) #removes KASRATAN
-    word = re.sub('\u064e','',word) #removes FATHA
-    word = re.sub('\u064f','',word) #removes DAMMA
-    word = re.sub('\u0650','',word) #removes KASRA
-    word = re.sub('\u0651','',word) #removes SHADDA
-    word = re.sub('\u0652','',word) #removes SUKUN
-    if len(word) > 5:
-        if word.startswith('ال') or word.startswith('لل'): 
-            word = word[2:] #istrp not appropriate here
-        elif word.startswith('كال') or word.startswith('بال') or word.startswith('وال') or word.startswith('فال'): 
-            word = word[3:]
+    # characters to be removed
+    chars = [
+        '\u0640', # tatweel(kashidah
+        '\u064b', # FATHATA
+        '\u064c', # DAMMATA
+        '\u064d', # KASRATA
+        '\u064e', # FATH
+        '\u064f', # DAMM
+        '\u0650', # KASR
+        '\u0651', # SHADD
+        '\u0652'  # SUKUN
+    ]
+
+    for c in chars:
+        word = re.sub(c, '', word) # or you could use word = word.replace(c, '')
+
+    # remove prefixes
+    prefixes = [
+        'ال',
+        'لل',
+        'كال',
+        'بال',
+        'وال',
+        'فال'
+    ]
+    for p in prefixes:
+        if word.startswith(p):
+            word = word[len(p):]
     return word
 
 def sortwords(words):
